@@ -1,1 +1,1 @@
-export const baseUrl = "http://192.168.87.29:3001/api"
+export const baseUrl = "https://backend-mongodb-lxt6.onrender.com/api"

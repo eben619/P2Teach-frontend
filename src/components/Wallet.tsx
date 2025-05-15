@@ -41,12 +41,12 @@ const Wallet = () => {
 	useEffect(() => () => disconnectWallet(), [disconnectWallet]);
 
 	return (
-		<div ref={wrapperRef} className="relative wallet-container">
+		<div ref={wrapperRef}>
 			{providers.length > 0 ? (
 				<>
 					<button
 						onClick={() => (account ? disconnectWallet() : setIsOpen(!isOpen))}
-						className="flex items-center gap-2 py-2 px-4 rounded-full transition-all"
+						className="flex items-center text-xs sm:text-lg gap-2 py-2 px-4 rounded-full transition-all"
 						style={{
 							backgroundColor: appTheme[theme].surface.secondary,
 							opacity: isOpen ? 0.9 : 1,
@@ -93,7 +93,7 @@ const Wallet = () => {
 
 					{isOpen && (
 						<div
-							className="absolute mt-2 w-full min-w-[200px] rounded-lg shadow-lg py-2 z-50"
+							className="absolute mt-2 min-w-[90px] rounded-lg shadow-lg py-2 z-50"
 							style={{
 								backgroundColor: appTheme[theme].surface.primary,
 								border: `1px solid ${appTheme[theme].neutral[100]}`,

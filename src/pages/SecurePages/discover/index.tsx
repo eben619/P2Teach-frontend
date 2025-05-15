@@ -15,7 +15,7 @@ const DiscoverCourses = () => {
 	const { theme } = useAppStore(["theme"]);
 	const { openDrawer } = useModal();
 
-	// Fetch sessions using TanStack Query
+	// Fetch sessions
 	const {
 		data: sessions,
 		isLoading,
@@ -40,31 +40,31 @@ const DiscoverCourses = () => {
 
 	return (
 		<div
-			className="p-6"
+			className="p-4 sm:p-6"
 			style={{
 				backgroundColor: appTheme[theme].surface.secondary,
 				color: appTheme.text.primary,
 			}}
 		>
-			<div className="flex items-center justify-between">
-				<h1 className="text-3xl font-bold mb-8">Discover Courses</h1>
+			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+				<h1 className="text-2xl sm:text-3xl font-bold">Discover Courses</h1>
 				<SlideShowText theme={theme} />
 			</div>
 
-			{/* Search and Filters */}
+			{/* Search & Filters */}
 			{!isLoading && (
-				<div className="mb-8 flex flex-col md:flex-row gap-4">
+				<div className="mb-8 flex flex-col md:flex-row gap-4 w-full">
 					<input
 						type="text"
 						placeholder="Search courses..."
-						className="p-3 rounded-lg flex-1"
+						className="p-3 rounded-lg w-full md:w-auto flex-1"
 						style={{
 							backgroundColor: appTheme[theme].surface.primary,
 							border: `1px solid ${appTheme[theme].neutral[200]}`,
 						}}
 					/>
 					<select
-						className="p-3 rounded-lg"
+						className="p-3 rounded-lg w-full md:w-auto"
 						style={{
 							backgroundColor: appTheme[theme].surface.primary,
 							border: `1px solid ${appTheme[theme].neutral[200]}`,
@@ -78,10 +78,10 @@ const DiscoverCourses = () => {
 				</div>
 			)}
 
-			{/* Loading state */}
+			{/* Loading */}
 			{isLoading && <SkeletonLoader theme={theme} cardCount={6} />}
 
-			{/* Error state */}
+			{/* Error */}
 			{isError && (
 				<div
 					className="text-center py-8"
@@ -91,9 +91,9 @@ const DiscoverCourses = () => {
 				</div>
 			)}
 
-			{/* Success state */}
+			{/* Success */}
 			{!isLoading && !isError && (
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 					{sessions?.map((session) => (
 						<DiscoverCourseCard
 							key={session.id}

@@ -5,6 +5,8 @@ import { appTheme } from "../../constant/theme";
 import { toast } from "react-toastify";
 import { AuthButton } from "./components/auth-button";
 import useAppStore from "../../store/useAppStore";
+import { baseUrl } from "../../apis";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationPage() {
 	const { theme } = useAppStore(["theme"]);
@@ -19,6 +21,7 @@ export default function RegistrationPage() {
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const navigate = useNavigate();
 
 	const courses = [
 		"Computer Science",
@@ -85,7 +88,7 @@ export default function RegistrationPage() {
 
 		try {
 			const response = await axios.post(
-				"http://localhost:3001/api/user/auth/register",
+				`${baseUrl}/user/auth/register`,
 				{
 					firstname: formData.firstName,
 					lastname: formData.lastName,
@@ -98,6 +101,7 @@ export default function RegistrationPage() {
 			if (!response.data?.success) {
 				toast.error(response?.data?.message);
 				setIsSubmitting(false);
+				navigate("/login")
 				return;
 			}
 			toast.success(response.data?.message);

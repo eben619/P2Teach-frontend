@@ -33,7 +33,7 @@ const HomePage = () => {
 
 	return (
 		<div
-			className="p-4 md:p-6 space-y-6 md:space-y-8"
+			className="md:p-6 space-y-6 md:space-y-8"
 			style={{
 				backgroundColor: appTheme[theme].surface.secondary,
 				color:

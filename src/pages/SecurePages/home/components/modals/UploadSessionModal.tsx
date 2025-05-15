@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import useUserStore from "../../../../../store/useUserStore";
 import { useWalletStore } from "../../../../../store/useWalletStore";
 import { useModal } from "../../../../../hooks/useModal";
+import { baseUrl } from "../../../../../apis";
 
 // Animation variants
 const modalVariants = {
@@ -59,9 +60,14 @@ const UploadSessionModal = () => {
 		setIsSubmitting(true);
 
 		console.log("wallet address  ---", account);
+		if(!account){
+			toast.warn("Make sure your wallet is connected")
+			setIsSubmitting(false)
+			return
+		}
 
 		try {
-			const response = await axios.post("http://localhost:3001/api/sessions/", {
+			const response = await axios.post(`${baseUrl}/sessions/`, {
 				user_id: currentUser?.id,
 				coursetitle: formData.title,
 				subjectitle: formData.subject,
@@ -93,7 +99,7 @@ const UploadSessionModal = () => {
 			initial="hidden"
 			animate="visible"
 			variants={modalVariants}
-			className="p-6 rounded-lg w-full max-w-md"
+			className="p-0 sm:p-6 rounded-lg w-full"
 			style={{
 				backgroundColor: appTheme[theme].surface.primary,
 				color:

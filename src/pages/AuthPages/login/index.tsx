@@ -57,12 +57,11 @@ const Login = () => {
 		setIsSubmitting(true);
 
 		try {
-			await useUserStore.getState().login(formData.email, formData.password);
-
-			toast.success("Login successful!");
-
+			const isAuth = await useUserStore.getState().login(formData.email, formData.password);
 			// Redirect or perform other actions
-			navigate("/home");
+			if(isAuth){
+				navigate("/home");
+			}
 		} catch (error: any) {
 			console.error("Login error:", error);
 

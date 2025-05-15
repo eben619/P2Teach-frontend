@@ -3,6 +3,7 @@ import axios from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { baseUrl } from "../apis";
+import { toast } from "react-toastify";
 
 interface UserAttributes {
 	id: number;
@@ -22,7 +23,7 @@ interface UserState {
 	token: string | null;
 
 	// Actions
-	login: (email: string, password: string) => Promise<void>;
+	login: (email: string, password: string) => Promise<boolean>;
 	register: (userData: Omit<UserAttributes, "id">) => Promise<void>;
 	logout: () => void;
 	fetchCurrentUser: () => Promise<void>;
@@ -47,13 +48,20 @@ const useUserStore = create<UserState>()(
 						password,
 					});
 
-					const { user, token } = response.data;
+					if(response.data.success){
+						const { user, token } = response.data;
 
 					set({
 						currentUser: user,
 						token,
 						loading: false,
 					});
+					toast.success(response.data.message)
+					return true
+					}
+
+					toast.error(response.data.message)
+					return false
 				} catch (error: any) {
 					set({
 						error: error.response?.data?.message || "Login failed",

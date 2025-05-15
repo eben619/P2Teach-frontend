@@ -27,6 +27,25 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [isOpen, closeModal]);
 
+  // const getResponsiveContainerStyle = (): React.CSSProperties => {
+  //   // Base position styles from type
+  //   const baseStyles = getPositionStyles();
+  
+  //   return {
+  //     ...baseStyles,
+  //     width: '100%',
+  //     maxWidth: '100%',
+  //     height: type === 'modal' ? 'auto' : '100%',
+  //     // Responsive overrides
+  //     [`@media (min-width: 640px)`]: {
+  //       width: type === 'modal' ? '600px' : '400px',
+  //       maxWidth: '90%',
+  //       borderRadius: type === 'drawer' ? '0' : '0.75rem',
+  //     },
+  //   };
+  // };
+  
+
 
   const getPositionStyles = (): React.CSSProperties => {
     switch (type) {
@@ -76,10 +95,21 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         >
           <div
             ref={modalRef}
-            className={`absolute rounded-lg shadow-xl ${
-              type === 'bottom-sheet' ? 'rounded-b-none' : ''
-            } ${type === 'drawer' ? 'rounded-none' : ''}`}
+            className={`
+              absolute
+              w-full
+              h-full
+              sm:w-[600px]
+              sm:max-w-[90%]
+              sm:h-auto
+              rounded-none
+              sm:rounded-lg
+              shadow-xl
+              ${type === 'bottom-sheet' ? 'rounded-b-none' : ''}
+              ${type === 'drawer' ? 'sm:w-[400px]' : ''}
+            `}
             style={{
+              // ...getResponsiveContainerStyle(),
               ...getPositionStyles(),
               ...options.containerStyle,
               transition: `transform ${options.animationDuration}ms ease-in-out`,

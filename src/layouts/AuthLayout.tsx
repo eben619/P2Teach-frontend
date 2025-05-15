@@ -2,6 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { appTheme } from "../constant/theme";
 import logo from "../assets/logo.jpg";
 import useAppStore from "../store/useAppStore";
+import { ToastContainer } from "react-toastify";
 
 const AuthLayout = () => {
 	const { theme } = useAppStore(["theme"]);
@@ -32,7 +33,7 @@ const AuthLayout = () => {
 			{/* Main Content Area - now properly fills remaining space */}
 			<main className="flex-1 flex items-center justify-center p-4">
 				<div
-					className="w-full max-w-xl rounded-xl p-8"
+					className="w-full max-w-xl rounded-xl p-2 sm:p-8"
 					style={{
 						backgroundColor: appTheme[theme].surface.primary,
 					}}
@@ -47,6 +48,15 @@ const AuthLayout = () => {
 					© {new Date().getFullYear()} P2Teach. All rights reserved.
 				</p>
 			</footer>
+			<ToastContainer
+						position="bottom-right"
+						toastStyle={{
+							backgroundColor: appTheme[theme].surface.primary,
+							color: appTheme[theme].neutral[200],
+							border: `1px solid ${appTheme[theme].neutral[200]}`,
+							boxShadow: appTheme.shadows.md,
+						}}
+					/>
 		</div>
 	);
 };
