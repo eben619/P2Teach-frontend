@@ -5,8 +5,15 @@ import { appTheme } from "../../constant/theme";
 import { toast } from "react-toastify";
 import { AuthButton } from "./components/auth-button";
 import useAppStore from "../../store/useAppStore";
-import { baseUrl } from "../../apis";
-import { useNavigate } from "react-router-dom";
+import P2TeachJson from "../../abi/P2Teach.json";
+import { ethers } from "ethers";
+
+// Add Ethereum to the Window interface
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 export default function RegistrationPage() {
 	const { theme } = useAppStore(["theme"]);
@@ -21,7 +28,10 @@ export default function RegistrationPage() {
 	});
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const navigate = useNavigate();
+	const [isBlockchainProcessing, setIsBlockchainProcessing] = useState(false);
+
+	// Contract address on Base Sepolia
+	const contractAddress = "0x9b3525032030b91aa27370f4a6fddb74ceb25936";
 
 	const courses = [
 		"Computer Science",
@@ -80,6 +90,52 @@ export default function RegistrationPage() {
 		setStep(1);
 	};
 
+	// Function to connect to wallet and register user on the blockchain
+	const registerUserOnBlockchain = async () => {
+		try {
+			setIsBlockchainProcessing(true);
+			
+			// Request account access if needed
+			if (!window.ethereum) {
+				toast.error("Please install MetaMask or another Web3 wallet to continue");
+				return false;
+			}
+			
+			await window.ethereum.request({ method: 'eth_requestAccounts' });
+			
+			// Provider and signer
+			const provider = new ethers.BrowserProvider(window.ethereum);
+			const signer = await provider.getSigner();
+			
+			// Extract the ABI from the JSON file
+			const contractAbi = P2TeachJson.abi;
+			
+			// Create contract instance
+			const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+			
+			// Call contract function
+			const transaction = await contract.registerUser(
+				formData.firstName,
+				formData.lastName,
+				formData.email,
+				formData.course
+			);
+			
+			// Wait for transaction to be mined
+			toast.info("Registration transaction submitted. Please wait for confirmation...");
+			await transaction.wait();
+			
+			toast.success("Successfully registered on blockchain!");
+			return true;
+		} catch (error) {
+			console.error("Blockchain registration error:", error);
+			toast.error((error as Error).message || "Failed to register on blockchain. Please try again.");
+			return false;
+		} finally {
+			setIsBlockchainProcessing(false);
+		}
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!validateStep2()) return;
@@ -87,8 +143,18 @@ export default function RegistrationPage() {
 		setIsSubmitting(true);
 
 		try {
+			// First register on the blockchain
+			const blockchainSuccess = await registerUserOnBlockchain();
+			
+			// If blockchain registration failed, stop the process
+			if (!blockchainSuccess) {
+				setIsSubmitting(false);
+				return;
+			}
+			
+			// Then proceed with backend registration
 			const response = await axios.post(
-				`${baseUrl}/user/auth/register`,
+				"http://localhost:3001/api/user/auth/register",
 				{
 					firstname: formData.firstName,
 					lastname: formData.lastName,
@@ -101,12 +167,11 @@ export default function RegistrationPage() {
 			if (!response.data?.success) {
 				toast.error(response?.data?.message);
 				setIsSubmitting(false);
-				navigate("/login")
 				return;
 			}
 			toast.success(response.data?.message);
-			setIsSubmitting(false);
-			return;
+			// Redirect to login after successful registration
+			window.location.href = "/login";
 		} catch (error) {
 			const axiosError = error as AxiosError<{ message?: string }>;
 			setErrors({
@@ -173,7 +238,6 @@ export default function RegistrationPage() {
 										? appTheme[theme].status.error
 										: appTheme[theme].neutral[200],
 									backgroundColor: appTheme[theme].surface.secondary,
-									// focusRingColor: appTheme.colors.accent.primary as any
 								}}
 							/>
 							{errors.firstName && (
@@ -201,7 +265,6 @@ export default function RegistrationPage() {
 										? appTheme[theme].status.error
 										: appTheme[theme].neutral[200],
 									backgroundColor: appTheme[theme].surface.secondary,
-									// focusRingColor: appTheme.colors.accent.primary
 								}}
 							/>
 							{errors.lastName && (
@@ -230,7 +293,6 @@ export default function RegistrationPage() {
 									? appTheme[theme].status.error
 									: appTheme[theme].neutral[200],
 								backgroundColor: appTheme[theme].surface.secondary,
-								// focusRingColor: appTheme.colors.accent.primary
 							}}
 						/>
 						{errors.email && (
@@ -290,7 +352,6 @@ export default function RegistrationPage() {
 								backgroundRepeat: "no-repeat",
 								backgroundPosition: "right 1rem center",
 								backgroundSize: "1rem",
-								// focusRingColor: appTheme.colors.accent.primary
 							}}
 						>
 							<option value="">Select your course</option>
@@ -323,8 +384,6 @@ export default function RegistrationPage() {
 									? appTheme[theme].status.error
 									: appTheme[theme].neutral[200],
 								backgroundColor: appTheme[theme].surface.secondary,
-
-								// focusRingColor: appTheme.colors.accent.primary
 							}}
 						/>
 						{errors.password && (
@@ -356,8 +415,6 @@ export default function RegistrationPage() {
 									theme === "light"
 										? appTheme.text.primary
 										: appTheme.text.inverted,
-
-								// focusRingColor: appTheme[theme].accent.primary
 							}}
 						/>
 						{errors.confirmPassword && (
@@ -386,9 +443,9 @@ export default function RegistrationPage() {
 
 						<AuthButton
 							type="submit"
-							disabled={isSubmitting}
-							isLoading={isSubmitting}
-							label="Create Account"
+							disabled={isSubmitting || isBlockchainProcessing}
+							isLoading={isSubmitting || isBlockchainProcessing}
+							label={isBlockchainProcessing ? "Registering on Blockchain..." : "Create Account"}
 						/>
 					</div>
 				</form>
