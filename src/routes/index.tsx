@@ -11,6 +11,7 @@ import SecuredRoute from "../components/auth/securedRoutes";
 import PublicRoute from "../components/auth/publicRoute";
 import Providers from "../layouts/Provideders";
 import Wallet from "../components/Wallet";
+import LandingPage from "../pages/LandingPage";
 
 // const ProfilePage = lazy(() => import("../pages/App/Profile"));
 // const ErrorPage = lazy(() => import("../pages/Error"));
@@ -18,7 +19,7 @@ import Wallet from "../components/Wallet";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Wallet />,
+		element: <LandingPage />,
 	},
 	{
 		path: "/login/*",
