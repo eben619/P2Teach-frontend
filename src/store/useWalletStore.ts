@@ -107,17 +107,17 @@ export const useWalletStore = create<WalletState>()(
 			},
 
 			disconnectWallet: () => {
-				const { provider } = get();
-				if (provider && provider._listeners) {
-					provider.provider.removeListener(
-						"accountsChanged",
-						provider._listeners.accountsChanged
-					);
-					provider.provider.removeListener(
-						"chainChanged",
-						provider._listeners.chainChanged
-					);
-				}
+				// const { provider } = get();
+				// if (provider && provider?._listeners) {
+				// 	provider?.provider?.removeListener(
+				// 		"accountsChanged",
+				// 		provider?._listeners.accountsChanged
+				// 	);
+				// 	provider?.provider?.removeListener(
+				// 		"chainChanged",
+				// 		provider?._listeners?.chainChanged
+				// 	);
+				// }
 				set({
 					provider: null,
 					account: "",

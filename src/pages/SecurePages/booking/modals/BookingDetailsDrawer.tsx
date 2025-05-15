@@ -170,7 +170,7 @@ const BookingDetailsDrawer: React.FC<BookingDetailsDrawerProps> = ({
 
   return (
     <div 
-        className="w-[35dvw] h-full pb-8 overflow-y-auto transition-transform duration-300"
+        className="w-full h-full pb-8 overflow-y-auto transition-transform duration-300"
         style={{
           backgroundColor: appTheme[theme].surface.primary,
           color: theme === "light" ? appTheme.text.primary : appTheme.text.inverted,

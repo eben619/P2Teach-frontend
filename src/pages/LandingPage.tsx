@@ -4,10 +4,28 @@ import { FaChalkboardTeacher, FaHandshake, FaShieldAlt, FaMoneyCheckAlt, FaComme
 import { MdLocationOn, MdAccessTime } from 'react-icons/md';
 import { appTheme } from '../constant/theme';
 import { useNavigate } from 'react-router-dom';
+import TeamCard from '../components/cards/TeamCard';
+import Sam from '../assets/teamPhotos/Sam Edem.jpg'
+import Ababio from '../assets/teamPhotos/Ababio.jpg'
 
 const LandingPage = () => {
   const { theme } = useAppStore(['theme']);
   const navigate = useNavigate();
+
+  const teams = [
+    {
+        name: "Sam Edem",
+        photo: Sam,
+        role: "Bussiness Developer",
+
+    },
+    {
+        name: "Ababio",
+        photo: Ababio,
+        role: "Project Lead",
+
+    },
+  ]
 
   return (
     <div style={{ 
@@ -113,112 +131,12 @@ const LandingPage = () => {
     <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
     <div className="grid md:grid-cols-3 gap-8">
       {/* Team Member 1 */}
-      <div 
-        className="p-8 rounded-xl text-center transition-transform duration-300 hover:transform hover:scale-105"
-        style={{ 
-          backgroundColor: appTheme[theme].surface.elevated,
-          boxShadow: appTheme.shadows.md
-        }}
-      >
-        <div className="relative w-32 h-32 mx-auto mb-6">
-          <img 
-            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" 
-            alt="Team member" 
-            className="rounded-full w-full h-full object-cover border-4"
-            style={{ borderColor: appTheme[theme].accent.primary }}
-          />
-        </div>
-        <h3 className="text-xl font-bold mb-2">Kwame Osei</h3>
-        <p className="text-sm mb-4" style={{ color: appTheme[theme].accent.primary }}>
-          Founder & CEO
-        </p>
-        <p className="mb-4 opacity-90">
-          Education technology enthusiast with a passion for connecting students
-        </p>
-        <div className="flex justify-center gap-4">
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10" 
-            style={{ color: appTheme[theme].accent.primary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaLinkedin className="text-xl" />
-          </a>
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
-            style={{ color: appTheme[theme].accent.primary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaTwitter className="text-xl" />
-          </a>
-        </div>
-      </div>
-
-      {/* Team Member 2 */}
-      <div 
-        className="p-8 rounded-xl text-center transition-transform duration-300 hover:transform hover:scale-105"
-        style={{ 
-          backgroundColor: appTheme[theme].surface.elevated,
-          boxShadow: appTheme.shadows.md
-        }}
-      >
-        <div className="relative w-32 h-32 mx-auto mb-6">
-          <img 
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" 
-            alt="Team member" 
-            className="rounded-full w-full h-full object-cover border-4"
-            style={{ borderColor: appTheme[theme].accent.secondary }}
-          />
-        </div>
-        <h3 className="text-xl font-bold mb-2">Ama Asante</h3>
-        <p className="text-sm mb-4" style={{ color: appTheme[theme].accent.secondary }}>
-          Head of Product
-        </p>
-        <p className="mb-4 opacity-90">
-          UX specialist focused on creating seamless educational experiences
-        </p>
-        <div className="flex justify-center gap-4">
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
-            style={{ color: appTheme[theme].accent.secondary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaLinkedin className="text-xl" />
-          </a>
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
-            style={{ color: appTheme[theme].accent.secondary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaGithub className="text-xl" />
-          </a>
-        </div>
-      </div>
-
-      {/* Team Member 3 */}
-      <div 
-        className="p-8 rounded-xl text-center transition-transform duration-300 hover:transform hover:scale-105"
-        style={{ 
-          backgroundColor: appTheme[theme].surface.elevated,
-          boxShadow: appTheme.shadows.md
-        }}
-      >
-        <div className="relative w-32 h-32 mx-auto mb-6">
-          <img 
-            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" 
-            alt="Team member" 
-            className="rounded-full w-full h-full object-cover border-4"
-            style={{ borderColor: appTheme[theme].accent.tertiary }}
-          />
-        </div>
-        <h3 className="text-xl font-bold mb-2">Kofi Mensah</h3>
-        <p className="text-sm mb-4" style={{ color: appTheme[theme].accent.tertiary }}>
-          Tech Lead
-        </p>
-        <p className="mb-4 opacity-90">
-          Blockchain expert ensuring secure and reliable transactions
-        </p>
-        <div className="flex justify-center gap-4">
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
-            style={{ color: appTheme[theme].accent.tertiary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaGlobe className="text-xl" />
-          </a>
-          <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
-            style={{ color: appTheme[theme].accent.tertiary, backgroundColor: appTheme[theme].neutral[200] }}>
-            <FaMedium className="text-xl" />
-          </a>
-        </div>
-      </div>
-    </div>
+     {teams.map((teamMember, index) => (
+        <TeamCard img={teamMember.photo} name={teamMember.name} role={teamMember.role} theme={theme} key={index} />
+     ))}
 
     {/* Advisors Section */}
+    </div>
     <div className="mt-20">
       <h3 className="text-xl font-bold text-center mb-8">Advisors</h3>
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">

@@ -96,7 +96,7 @@ const BookLectureDrawer: React.FC<BookLectureDrawerProps> = ({ course }) => {
 
 	return (
 		<div
-			className="w-[45dvw] h-full flex flex-col p-6"
+			className="w-full h-full flex flex-col"
 			style={{
 				backgroundColor: appTheme[theme].surface.primary,
 				color:
