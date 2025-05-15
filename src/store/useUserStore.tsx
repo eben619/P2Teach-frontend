@@ -2,6 +2,7 @@
 import axios from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { baseUrl } from "../apis";
 
 interface UserAttributes {
 	id: number;
@@ -29,8 +30,6 @@ interface UserState {
 	deleteUser: () => Promise<void>;
 }
 
-const API_URL = "http://localhost:3001/api";
-
 const useUserStore = create<UserState>()(
 	persist(
 		(set, get) => ({
@@ -43,7 +42,7 @@ const useUserStore = create<UserState>()(
 			login: async (email, password) => {
 				set({ loading: true, error: null });
 				try {
-					const response = await axios.post(`${API_URL}/user/auth/login`, {
+					const response = await axios.post(`${baseUrl}/user/auth/login`, {
 						email,
 						password,
 					});
@@ -69,7 +68,7 @@ const useUserStore = create<UserState>()(
 				set({ loading: true, error: null });
 				try {
 					const response = await axios.post(
-						`${API_URL}/auth/register`,
+						`${baseUrl}/auth/register`,
 						userData
 					);
 					const { user, token } = response.data;
@@ -100,7 +99,7 @@ const useUserStore = create<UserState>()(
 				set({ loading: true });
 				try {
 					const { token } = get();
-					const response = await axios.get(`${API_URL}/users`, {
+					const response = await axios.get(`${baseUrl}/users`, {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
@@ -126,7 +125,7 @@ const useUserStore = create<UserState>()(
 					if (!currentUser) throw new Error("Not authenticated");
 
 					const response = await axios.patch(
-						`${API_URL}/users/${currentUser.id}`,
+						`${baseUrl}/users/${currentUser.id}`,
 						updates,
 						{
 							headers: {
@@ -155,7 +154,7 @@ const useUserStore = create<UserState>()(
 					const { token, currentUser } = get();
 					if (!currentUser) throw new Error("Not authenticated");
 
-					await axios.delete(`${API_URL}/users/${currentUser.id}`, {
+					await axios.delete(`${baseUrl}/users/${currentUser.id}`, {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
