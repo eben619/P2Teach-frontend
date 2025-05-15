@@ -2,6 +2,7 @@
 import { lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '../components/ErrorFallBack';
+import ProfilePage from '../pages/SecurePages/profile/profilePage';
 // import { Navigate } from 'react-router-dom';
 // import ProtectedRoute from '../components/auth/protectedRoute';
 const HomePage = lazy(() => import('../pages/SecurePages/home'));
@@ -38,6 +39,14 @@ const protectedRoutes = [
 		element: (
 			<ErrorBoundary FallbackComponent={ErrorFallback}>
 				<BookingsPage />
+			</ErrorBoundary>
+		),
+	},
+	{
+		path: "profile",
+		element: (
+			<ErrorBoundary FallbackComponent={ErrorFallback}>
+				<ProfilePage />
 			</ErrorBoundary>
 		),
 	},

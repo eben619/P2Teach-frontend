@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import TeamCard from '../components/cards/TeamCard';
 import Sam from '../assets/teamPhotos/Sam Edem.jpg'
 import Ababio from '../assets/teamPhotos/Ababio.jpg'
+import Philip from "../assets/teamPhotos/Philip.jpg"
+import Ben from "../assets/teamPhotos/Ben.jpg"
+import Charity from '../assets/teamPhotos/Charity.png'
+import Peer from '../assets/peer-peer.jpg'
 
 const LandingPage = () => {
   const { theme } = useAppStore(['theme']);
@@ -14,17 +18,35 @@ const LandingPage = () => {
 
   const teams = [
     {
-        name: "Sam Edem",
-        photo: Sam,
-        role: "Bussiness Developer",
-
+      name: "Ababio",
+      photo: Ababio,
+      role: "Project Lead",
+      describe: "Oversees strategic direction and ensures project milestones are met"
     },
     {
-        name: "Ababio",
-        photo: Ababio,
-        role: "Project Lead",
-
+      name: "Sam Edem",
+      photo: Sam,
+      role: "Business Development",
+      describe: "Drives partnerships and expands our academic network"
     },
+    {
+      name: "Bernard Baah",
+      photo: Ben,
+      role: "Fullstack/Blockchain Developer",
+      describe: "Builds secure platform infrastructure and smart contracts"
+    },
+    {
+      name: "Philip A. Armah",
+      photo: Philip,
+      role: "UI/UX Designer",
+      describe: "Creates intuitive user experiences and visual interfaces"
+    },
+    {
+      name: "Charity",
+      photo: Charity,
+      role: "Marketing Lead",
+      describe: "Develops engagement strategies and grows our community"
+    }
   ]
 
   return (
@@ -34,31 +56,102 @@ const LandingPage = () => {
       minHeight: '100vh'
     }}>
       {/* Hero Section */}
-      <section className="px-6 py-20 text-center" style={{ backgroundColor: appTheme[theme].accent.primary }}>
-        <h1 className="text-4xl font-bold mb-6 text-white">Bridge Your Academic Gaps with Peer Tutoring</h1>
-        <p className="text-xl mb-8 text-white opacity-90">
-          Connect instantly with qualified tutors across campus or online
-        </p>
-        <div className="flex justify-center gap-4 mb-12">
-          <button 
-            onClick={()=> navigate("/login")}
-            className="px-8 py-3 rounded-lg font-semibold"
-            style={{ 
-              backgroundColor: appTheme.text.inverted,
-              color: appTheme[theme].accent.primary
-            }}
-          >
-            Find a Tutor Now
-          </button>
-        </div>
-        <div className="max-w-4xl mx-auto">
-          <img 
-            src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-            alt="Students collaborating" 
-            className="rounded-xl shadow-xl"
-          />
-        </div>
-      </section>
+      {/* Hero Section */}
+<section className="relative overflow-hidden" style={{ 
+  backgroundColor: appTheme[theme].accent.primary,
+  minHeight: '60vh',
+  padding: '6rem 1rem'
+}}>
+  <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+    {/* Text Content */}
+    <div className="flex-1 text-left space-y-8 z-10">
+      <h1 className="text-5xl md:text-6xl font-bold leading-tight" style={{
+        color: appTheme.text.inverted,
+        textShadow: `2px 2px 4px ${appTheme[theme].neutral[700]}`
+      }}>
+        Master Your Courses with<br/>
+        <span style={{ color: appTheme[theme].accent.secondary }}>Peer-to-Peer</span> Excellence
+      </h1>
+      
+      <p className="text-xl md:text-2xl max-w-2xl" style={{
+        color: appTheme.text.inverted,
+        opacity: 0.95,
+        lineHeight: 1.6
+      }}>
+        Connect with top-performing students across Ghanaian universities for personalized, course-specific tutoring sessions.
+      </p>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button 
+          onClick={() => navigate("/login")}
+          className="px-8 py-4 rounded-lg font-semibold transform transition-all hover:scale-105"
+          style={{ 
+            backgroundColor: appTheme.text.inverted,
+            color: appTheme[theme].accent.primary,
+            boxShadow: appTheme.shadows.xl
+          }}
+        >
+          Find Your Tutor Now →
+        </button>
+        <button
+          className="px-8 py-4 rounded-lg font-semibold border-2 transform transition-all hover:scale-105"
+          style={{
+            borderColor: appTheme.text.inverted,
+            color: appTheme.text.inverted,
+            background: 'transparent'
+          }}
+        >
+          How It Works
+        </button>
+      </div>
+    </div>
+
+    {/* Image Container */}
+    <div className="flex-1 relative" style={{ maxWidth: '600px' }}>
+      <div className="relative rounded-3xl overflow-hidden" style={{
+        boxShadow: appTheme.shadows.xl,
+        border: `4px solid ${appTheme[theme].accent.secondary}`
+      }}>
+        <img 
+          src={Peer} 
+          alt="Students collaborating" 
+          className="w-full h-full object-cover"
+          style={{
+            minHeight: '400px',
+            filter: `brightness(${theme === 'light' ? 1.05 : 0.95})`
+          }}
+        />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(45deg, ${appTheme[theme].accent.primary}20, ${appTheme[theme].accent.secondary}30)`
+        }}></div>
+      </div>
+      
+      {/* Decorative Elements */}
+      <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full" style={{
+        backgroundColor: appTheme[theme].accent.secondary,
+        opacity: 0.2,
+        filter: 'blur(40px)'
+      }}></div>
+    </div>
+  </div>
+
+  {/* Wave Divider */}
+  <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+    <svg 
+      viewBox="0 0 1200 120" 
+      style={{
+        fill: appTheme[theme].base.primary,
+        transform: 'rotate(180deg)'
+      }}
+    >
+      <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" 
+      opacity=".25" />
+      <path d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z" 
+      opacity=".5" />
+      <path d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z" />
+    </svg>
+  </div>
+</section>
 
       {/* Features Grid */}
       <section className="py-20 px-6">
@@ -132,40 +225,11 @@ const LandingPage = () => {
     <div className="grid md:grid-cols-3 gap-8">
       {/* Team Member 1 */}
      {teams.map((teamMember, index) => (
-        <TeamCard img={teamMember.photo} name={teamMember.name} role={teamMember.role} theme={theme} key={index} />
+        <TeamCard img={teamMember.photo} roleDescription={teamMember.describe} name={teamMember.name} role={teamMember.role} theme={theme} key={index} />
      ))}
 
-    {/* Advisors Section */}
     </div>
-    <div className="mt-20">
-      <h3 className="text-xl font-bold text-center mb-8">Advisors</h3>
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div className="flex items-center gap-6 p-4 rounded-lg" 
-          style={{ backgroundColor: appTheme[theme].surface.primary }}>
-          <img 
-            src="https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=656&q=80" 
-            className="w-16 h-16 rounded-full" 
-            alt="Advisor" 
-          />
-          <div>
-            <h4 className="font-bold">Dr. Nana Kwame</h4>
-            <p className="text-sm opacity-75">Education Technology Professor</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-6 p-4 rounded-lg" 
-          style={{ backgroundColor: appTheme[theme].surface.primary }}>
-          <img 
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" 
-            className="w-16 h-16 rounded-full" 
-            alt="Advisor" 
-          />
-          <div>
-            <h4 className="font-bold">Esi Coleman</h4>
-            <p className="text-sm opacity-75">Startup Mentor</p>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </section>
 

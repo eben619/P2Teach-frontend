@@ -95,9 +95,9 @@ export const appTheme: AppTheme = {
 	},
 	dark: {
 		base: {
-			primary: "#0F172A", // Dark blue-gray (background)
-			secondary: "#1E293B", // Slightly lighter background
-			tertiary: "#334155", // Borders and accents
+			primary: "#0F172A", 
+			secondary: "#1E293B", 
+			tertiary: "#334155", 
 		},
 		surface: {
 			primary: "#1E293B", // Card backgrounds

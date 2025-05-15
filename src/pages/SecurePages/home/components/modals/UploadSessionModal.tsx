@@ -168,7 +168,7 @@ const UploadSessionModal = () => {
 			initial="hidden"
 			animate="visible"
 			variants={modalVariants}
-			className="p-6 rounded-lg w-full max-w-md"
+			className="p-6 rounded-lg w-full"
 			style={{
 				backgroundColor: appTheme[theme].surface.primary,
 				color:
@@ -198,7 +198,7 @@ const UploadSessionModal = () => {
 
 			<motion.form
 				onSubmit={handleSubmit}
-				className="space-y-6"
+				className="space-y-4 sm:space-y-6"
 				variants={{
 					visible: {
 						transition: {
@@ -341,7 +341,7 @@ const UploadSessionModal = () => {
 				</motion.div>
 
 				{/* Action Buttons */}
-				<motion.div className="flex gap-4" variants={itemVariants}>
+				<motion.div className="sm:flex flex-col flex-1 gap-4" variants={itemVariants}>
 					<motion.div
 						variants={buttonVariants}
 						whileHover="hover"
@@ -357,7 +357,7 @@ const UploadSessionModal = () => {
 					</motion.div>
 					<motion.button
 						type="button"
-						className="flex-1 px-4 py-3 rounded-lg font-semibold transition-colors duration-200 hover:brightness-95"
+						className="flex-1 px-4 py-3 w-full gap-2 rounded-lg font-semibold transition-colors duration-200 hover:brightness-95"
 						style={{
 							backgroundColor: appTheme[theme].surface.secondary,
 							border: `1px solid ${appTheme[theme].neutral[200]}`,

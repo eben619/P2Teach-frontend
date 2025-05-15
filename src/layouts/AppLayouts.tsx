@@ -20,12 +20,15 @@ import useAppStore from "../store/useAppStore";
 import useBookings from "../hooks/useBookings";
 import Logo3d from "../assets/Logo3d";
 import Wallet from "../components/Wallet";
+import useUserStore from "../store/useUserStore";
+import { MdPerson } from "react-icons/md";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const { theme, setTheme } = useAppStore(["theme", "setTheme"]);
   const { data: bookingsData, isLoading } = useBookings();
+  const {logout} = useUserStore()
 
   // Lock scroll when sidebar is open (Mobile UX improvement)
   useEffect(() => {
@@ -65,6 +68,7 @@ const AppLayout = () => {
     { name: "Dashboard", href: "/home", icon: FiHome },
     { name: "Discover Courses", href: "/home/discover", icon: FiBook },
     { name: "Bookings", href: "/home/bookings", icon: FiBookOpen },
+    { name: "Profile", href: "/home/profile", icon: MdPerson },
     // { name: "Study Groups", href: "/groups", icon: FiUsers },
   ];
 
@@ -239,7 +243,8 @@ const AppLayout = () => {
                     Profile
                   </Link>
                   <Link
-                    to="/logout"
+				  onClick={logout}
+                    to="/"
                     className="block px-4 py-2 hover:brightness-95 text-sm"
                   >
                     Logout

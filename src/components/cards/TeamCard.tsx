@@ -33,7 +33,7 @@ const TeamCard: React.FC<Props> = ({theme, img, role, roleDescription, name}) =>
     {role}
     </p>
     <p className="mb-4 opacity-90">
-      Blockchain expert ensuring secure and reliable transactions
+      {roleDescription}
     </p>
     <div className="flex justify-center gap-4">
       <a href="#" className="p-2 rounded-full hover:bg-opacity-10"
